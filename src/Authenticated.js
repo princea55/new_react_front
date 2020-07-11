@@ -39,18 +39,16 @@ class Authenticated extends Component {
         // }).then(res => res.setState({ user: JSON.stringify(res.data) })).then(user => console.log(user));
 
         if (this.state.logged_in) {
-            fetch('http://localhost:8000/auth/users', {
+            fetch('http://127.0.0.1:8000/auth/users/me', {
                 method: 'GET',
                 headers: {
-                    "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, Authorization",
-                    "Access-Control-Allow-Methods": "*",
-                    "Authorization": `Token ${localStorage.getItem('token').substr(15, 40)}`,
-                    "Content-Type": 'application/x-www-form-urlencoded',
-                    "withCredentials": true,
-                    "Access-Control-Allow-Origin":"*",
+                    Authorization: `Token ${localStorage.getItem('token')}`,
+                    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
                     'X-Requested-With': 'XMLHttpRequest'
                     
-                }
+                },
+                credentials: 'include'
+
             })
                 .then(res => JSON.stringify(res.data))
                 .then(json => {
